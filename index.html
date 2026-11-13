@@ -3,268 +3,392 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#d32f2f">
+<meta name="theme-color" content="#000000">
 <link rel="manifest" href="manifest.json">
-<title>सरल PDF</title>
+<title>RR PDF Pro</title>
 <style>
-:root{--r:#d32f2f;--bg:#fafafa;--card:#fff;--t:#222;--m:#777}
+:root{--bg:#000;--card:#161618;--card2:#1f1f23;--line:#2a2a30;--t:#f2f2f5;--m:#9a9aa6;--acc:#6366f1;--acc2:#ec4899;--ok:#22c55e;--bad:#ef4444}
+[data-theme=light]{--bg:#f5f5f7;--card:#fff;--card2:#eceef2;--line:#dcdde3;--t:#111;--m:#666}
+[data-theme=light] header,[data-theme=light] nav{background:#fff}
+[data-theme=light] .plan li{color:#333}[data-theme=light] .tool,[data-theme=light] .pill,[data-theme=light] .mini{color:#111}
+input[type=checkbox]{width:22px;height:22px;accent-color:var(--acc)}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-body{margin:0;font-family:system-ui,sans-serif;background:var(--bg);color:var(--t);padding-bottom:70px}
-header{background:var(--r);color:#fff;padding:14px 16px;font-size:20px;font-weight:700;position:sticky;top:0;z-index:5}
-main{padding:14px;max-width:720px;margin:auto}
+html,body{margin:0;background:var(--bg);color:var(--t);font-family:system-ui,-apple-system,"Noto Sans Devanagari",sans-serif}
+body{padding-bottom:78px;min-height:100vh}
+header{padding:calc(14px + env(safe-area-inset-top)) 16px 10px;position:sticky;top:0;background:var(--bg);z-index:5}
+header h1{margin:0;font-size:24px}
+header p{margin:2px 0 0;color:var(--m);font-size:13px}
+main{padding:6px 16px 20px;max-width:720px;margin:auto}
 .page{display:none}.page.on{display:block}
-.card{background:var(--card);border-radius:14px;padding:14px;margin-bottom:12px;box-shadow:0 1px 4px #0002}
-button,.btn{background:var(--r);color:#fff;border:0;border-radius:10px;padding:12px 16px;font-size:16px;width:100%;margin-top:8px;display:block;text-align:center}
-button.alt{background:#fff;color:var(--r);border:2px solid var(--r)}
-button:disabled{opacity:.5}
-nav{position:fixed;bottom:0;left:0;right:0;background:#fff;display:flex;border-top:1px solid #ddd;padding-bottom:env(safe-area-inset-bottom)}
-nav a{flex:1;text-align:center;padding:10px 2px;font-size:12px;color:var(--m);text-decoration:none}
-nav a.on{color:var(--r);font-weight:700}
-nav a span{display:block;font-size:20px}
-select,input,textarea{width:100%;padding:10px;font-size:16px;border:1px solid #ccc;border-radius:8px;margin-top:4px}
-label{font-size:14px;color:var(--m);display:block;margin-top:10px}
-.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
-.th{position:relative;border-radius:8px;overflow:hidden;background:#eee;aspect-ratio:3/4}
-.th img{width:100%;height:100%;object-fit:cover}
-.th b{position:absolute;top:2px;left:2px;background:#000a;color:#fff;font-size:11px;padding:1px 6px;border-radius:8px}
-.th div{position:absolute;bottom:0;left:0;right:0;display:flex;background:#000a}
-.th div i{flex:1;color:#fff;text-align:center;font-style:normal;padding:4px 0;font-size:15px}
-.stars{font-size:38px;text-align:center;color:#ccc;letter-spacing:4px}
-.stars s{text-decoration:none;color:#ccc}.stars s.f{color:#f5a623}
-.row{display:flex;justify-content:space-between;align-items:center;gap:8px}
-.row small{color:var(--m)}
-.mini{width:auto;padding:8px 12px;margin:0;font-size:14px}
-#prog{height:6px;background:#eee;border-radius:3px;overflow:hidden;display:none;margin-top:10px}
-#prog i{display:block;height:100%;width:0;background:var(--r)}
-p.s{color:var(--m);font-size:14px;line-height:1.5}
+.sec{font-size:12px;letter-spacing:.08em;color:var(--m);margin:16px 0 8px;font-weight:700}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.tool{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px;text-align:left;color:var(--t);font-size:15px;font-weight:600;min-height:104px;display:flex;flex-direction:column;gap:10px;width:100%}
+.tool .ic{width:42px;height:42px;border-radius:12px;display:grid;place-items:center;font-size:22px}
+.tool small{display:block;font-weight:400;color:var(--m);font-size:12px;margin-top:2px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px;margin-bottom:12px}
+.chips{display:flex;gap:6px;flex-wrap:wrap;margin:8px 0 0}
+.chip{background:var(--card2);border:1px solid var(--line);border-radius:20px;padding:5px 10px;font-size:12px;color:var(--m)}
+button{font:inherit;cursor:pointer}
+.btn{background:linear-gradient(180deg,var(--acc),var(--acc2));color:#fff;border:0;border-radius:14px;padding:15px;font-size:16px;font-weight:700;width:100%;margin-top:12px;display:flex;align-items:center;justify-content:center;gap:8px}
+.btn:disabled{opacity:.45}
+.drop{border:2px dashed var(--acc);color:var(--acc);background:transparent;border-radius:14px;padding:15px;font-size:16px;font-weight:700;width:100%;margin-top:10px}
+.mini{background:var(--card2);color:var(--t);border:1px solid var(--line);border-radius:10px;padding:8px 12px;font-size:14px}
+.mini.red{color:var(--bad)}
+.top{display:flex;align-items:center;gap:12px;margin:4px 0 10px}
+.back{background:none;border:0;color:var(--t);font-size:28px;padding:4px 8px}
+.top .ic{width:48px;height:48px;border-radius:14px;display:grid;place-items:center;font-size:24px}
+.top h2{margin:0;font-size:22px}
+.desc{color:var(--m);margin:4px 0 6px;font-size:15px}
+label{display:block;color:var(--m);font-size:14px;margin:14px 0 6px;font-weight:600}
+select,input[type=text],textarea,input[type=range]{width:100%;background:var(--card);border:1px solid var(--line);color:var(--t);border-radius:12px;padding:12px;font-size:16px}
+input[type=range]{padding:0;height:34px;accent-color:var(--acc)}
+.pills{display:flex;gap:8px;flex-wrap:wrap}
+.pill{background:var(--card);border:1px solid var(--line);color:var(--t);border-radius:22px;padding:10px 16px;font-size:15px}
+.pill.on{background:var(--acc);border-color:var(--acc)}
+.file{display:flex;align-items:center;gap:8px;padding:10px 0;border-bottom:1px solid var(--line)}
+.file:last-child{border:0}
+.file .n{flex:1;min-width:0;font-size:14px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.file .n small{display:block;color:var(--m);font-size:12px}
+.file b{color:var(--m);font-size:13px;width:22px}
+.empty{text-align:center;color:var(--m);padding:18px 8px;font-size:15px}
+.prog{height:8px;background:var(--card2);border-radius:5px;overflow:hidden;margin-top:12px;display:none}
+.prog i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--acc),var(--acc2));transition:width .2s}
+.pmsg{color:var(--m);font-size:13px;margin-top:6px;min-height:18px}
+.res{border-color:#14532d}
+.res h3{margin:0 0 4px;color:var(--ok);font-size:16px}
+.row{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px;align-items:center}
+.err{color:var(--bad);font-size:15px;margin-top:10px;line-height:1.5}
+nav{position:fixed;left:0;right:0;bottom:0;background:#0b0b0d;border-top:1px solid var(--line);display:flex;padding-bottom:env(safe-area-inset-bottom);z-index:10}
+nav a{flex:1;text-align:center;padding:9px 2px;font-size:11px;color:var(--m);text-decoration:none}
+nav a span{display:block;font-size:21px}
+nav a.on{color:#fff;font-weight:700}
+.plan{position:relative}
+.plan h3{margin:0;font-size:20px}
+.plan .pr{font-size:34px;font-weight:800;margin:6px 0}
+.plan .pr small{font-size:14px;color:var(--m);font-weight:500}
+.plan ul{list-style:none;padding:0;margin:10px 0 0}
+.plan li{padding:5px 0;color:#d7d7de;font-size:15px}
+.plan li:before{content:"✔ ";color:var(--acc)}
+.badge{position:absolute;top:-11px;right:14px;background:var(--acc);border-radius:14px;padding:4px 12px;font-size:12px;font-weight:700}
+.plan.hot{border:2px solid var(--acc)}
+.stars{font-size:40px;text-align:center;letter-spacing:4px;color:#444}
+.stars s{text-decoration:none}.stars s.f{color:#f5a623}
+p.s{color:var(--m);font-size:14px;line-height:1.6;margin:6px 0}
+#toast{position:fixed;left:16px;right:16px;bottom:92px;background:#fff;color:#000;border-radius:12px;padding:12px 14px;font-size:15px;display:none;z-index:50;text-align:center}
+.stat{display:flex;justify-content:space-between;color:var(--m);font-size:13px;margin-top:4px}
+.kv{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--line);font-size:15px}
+.kv:last-child{border:0}.kv span:last-child{color:var(--m)}
+textarea.out{min-height:160px;margin-top:8px;font-size:14px}
 </style>
 </head>
 <body>
-<header>📄 सरल PDF</header>
+<header><h1>📄 RR PDF Pro</h1><p id="sub">ऑफ़लाइन PDF टूलकिट · तेज़ और सुरक्षित</p></header>
 <main>
 
-<section id="home" class="page on">
-  <div class="card"><h3 style="margin-top:0">स्वागत है</h3>
-  <p class="s">फोटो से PDF बनाएँ। कोई विज्ञापन नहीं, कोई खाता नहीं, कोई शुल्क नहीं। आपकी फ़ाइलें फोन से बाहर कहीं नहीं जातीं।</p>
-  <button onclick="go('create')">➕ नया PDF बनाएँ</button>
-  <button class="alt" onclick="go('files')">📁 मेरी PDF फ़ाइलें</button></div>
-  <div class="card"><b>खासियतें</b>
-  <p class="s">✔ पूरी गुणवत्ता (फोटो वैसी ही, कम्प्रेस नहीं)<br>✔ बिना इंटरनेट के चलता है<br>✔ A4 या फोटो के आकार का पन्ना<br>✔ पन्नों का क्रम बदलें, हटाएँ<br>✔ सीधे WhatsApp आदि पर भेजें</p></div>
-</section>
-
-<section id="create" class="page">
+<section id="p-home" class="page on">
   <div class="card">
-    <input type="file" id="pick" accept="image/*" multiple hidden>
-    <button onclick="pick.click()">🖼️ फोटो चुनें</button>
-    <div id="grid" class="grid" style="margin-top:12px"></div>
-    <p class="s" id="empty">अभी कोई फोटो नहीं चुनी गई।</p>
+    <b>ऑफ़लाइन, सुरक्षित और हल्का</b>
+    <div class="chips"><span class="chip">📴 बिना इंटरनेट</span><span class="chip">🔒 फ़ाइल फोन से बाहर नहीं</span><span class="chip">🚫 कोई विज्ञापन नहीं</span><span class="chip">🪶 बहुत हल्का</span></div>
+    <div class="stat"><span id="todayN"></span><span id="limN"></span></div>
+    <button class="btn" id="inst" style="display:none">⬇️ ऐप इंस्टॉल करें</button>
   </div>
-  <div class="card">
-    <label>पन्ने का आकार</label>
-    <select id="size"><option value="a4">A4</option><option value="fit">फोटो के बराबर</option></select>
-    <label>किनारे की खाली जगह</label>
-    <select id="margin"><option value="0">कोई नहीं</option><option value="20" selected>छोटी</option><option value="40">बड़ी</option></select>
-    <label>गुणवत्ता</label>
-    <select id="qual"><option value="0.98">उच्चतम (Full HD+)</option><option value="0.9" selected>बहुत अच्छी</option><option value="0.7">छोटी फ़ाइल</option></select>
-    <label>फ़ाइल का नाम</label>
-    <input id="fname" placeholder="मेरा दस्तावेज़">
-    <button id="mk" disabled>📄 PDF बनाएँ</button>
-    <div id="prog"><i></i></div>
-    <p class="s" id="msg"></p>
+  <div class="sec">टूल्स</div>
+  <div class="grid" id="grid"></div>
+  <div class="card" id="rateHint" style="display:none;margin-top:14px">
+    <b>ऐप पसंद आया?</b><p class="s">एक रेटिंग हमारी बहुत मदद करती है।</p>
+    <button class="mini" onclick="location.hash='rate'">⭐ रेटिंग दें</button>
   </div>
 </section>
 
-<section id="files" class="page">
-  <div id="list"></div>
-  <p class="s" id="nof">अभी कोई PDF सुरक्षित नहीं है।</p>
+<section id="p-tool" class="page"></section>
+
+<section id="p-files" class="page">
+  <div class="sec">मेरी फ़ाइलें</div>
+  <div id="flist"></div>
+  <p class="empty" id="nof">अभी कोई फ़ाइल नहीं है। किसी टूल से काम करें, नतीजा यहाँ सुरक्षित रहेगा।</p>
+  <button class="mini red" id="clearAll" style="display:none">🗑 सब हटाएँ</button>
 </section>
 
-<section id="rate" class="page">
-  <div class="card">
-    <h3 style="margin-top:0">ऐप को रेटिंग दें</h3>
+<section id="p-plans" class="page">
+  <div class="card" style="border-color:var(--acc)"><b>🎁 लॉन्च ऑफ़र</b><p class="s">अभी ऐप की सभी सुविधाएँ बिना सीमा के मुफ़्त हैं। नीचे के प्लान जल्द चालू होंगे।</p></div>
+  <div class="card plan"><h3>मुफ़्त</h3><div class="pr">₹0</div>
+    <ul><li>सभी 9 टूल</li><li>रोज़ 5 काम</li><li>25 MB तक की फ़ाइल</li><li>100% ऑफ़लाइन</li></ul></div>
+  <div class="card plan"><h3>मासिक</h3><div class="pr">₹49 <small>/ महीना</small></div>
+    <ul><li>असीमित काम</li><li>100 MB तक की फ़ाइल</li><li>नए टूल सबसे पहले</li><li>सहायता को प्राथमिकता</li></ul>
+    <button class="btn plan-btn">जल्द चालू होगा</button></div>
+  <div class="card plan hot"><span class="badge">सबसे किफ़ायती</span><h3>जीवनभर</h3><div class="pr">₹99 <small>/ एक बार</small></div>
+    <ul><li>मासिक की सारी सुविधाएँ</li><li>एक बार भुगतान, हमेशा के लिए</li><li>भविष्य के सारे नए टूल शामिल</li></ul>
+    <button class="btn plan-btn">जल्द चालू होगा</button></div>
+  <p class="s">भुगतान चालू होते ही यहीं खरीदने का बटन आ जाएगा। तब तक कोई पैसा नहीं लिया जाता।</p>
+</section>
+
+<section id="p-rate" class="page">
+  <div class="card"><h3 style="margin-top:0">ऐप को रेटिंग दें</h3>
     <div class="stars" id="stars"><s>★</s><s>★</s><s>★</s><s>★</s><s>★</s></div>
-    <textarea id="cmt" rows="3" placeholder="आपकी राय (वैकल्पिक)"></textarea>
-    <button id="sendR">✅ रेटिंग सुरक्षित करें</button>
-    <p class="s" id="avg"></p>
-  </div>
-  <div class="card">
-    <h3 style="margin-top:0">दोस्तों को भेजें</h3>
-    <button onclick="shareApp()">🔗 ऐप शेयर करें</button>
-  </div>
+    <label>आपकी राय (वैकल्पिक)</label><textarea id="cmt" rows="3"></textarea>
+    <button class="btn" id="sendR">✅ रेटिंग सुरक्षित करें</button>
+    <p class="s" id="avg"></p></div>
+  <div class="card"><h3 style="margin-top:0">दोस्तों को भेजें</h3><button class="btn" id="shareApp">🔗 ऐप शेयर करें</button></div>
 </section>
 
-<section id="about" class="page">
+<section id="p-about" class="page">
+  <div class="card"><h3 style="margin-top:0">सेटिंग</h3>
+    <div class="kv"><span>हल्की थीम (Light)</span><span><input type="checkbox" id="setLight"></span></div>
+    <div class="kv"><span>स्क्रीन चालू रखें</span><span><input type="checkbox" id="setWake"></span></div>
+    <p class="s" id="wakeNote"></p></div>
+  <div class="card"><h3 style="margin-top:0">जानकारी</h3>
+    <div class="kv"><span>निर्माता</span><span id="cr"></span></div>
+    <div class="kv"><span>संपर्क</span><span id="em"></span></div>
+    <div class="kv"><span>संस्करण</span><span id="ver"></span></div>
+  </div>
   <div class="card"><h3 style="margin-top:0">गोपनीयता नीति</h3>
-  <p class="s">यह ऐप आपकी कोई जानकारी इकट्ठा या सर्वर पर नहीं भेजता। फोटो और PDF केवल आपके फोन में बनते और रखे जाते हैं। ऐप में कोई विज्ञापन या ट्रैकर नहीं है। रेटिंग और राय भी केवल आपके फोन में रहती है।</p></div>
-  <div class="card"><h3 style="margin-top:0">जानकारी</h3><p class="s">संस्करण 1.0</p></div>
+    <p class="s">यह ऐप पूरी तरह आपके फोन पर चलता है। आपकी फोटो और PDF कभी किसी सर्वर पर नहीं भेजी जातीं। ऐप कोई जानकारी इकट्ठा नहीं करता, कोई ट्रैकर या विज्ञापन नहीं है, और कोई अनुमति (permission) नहीं माँगता। बनी हुई फ़ाइलें केवल आपके फोन के ब्राउज़र भंडार में रहती हैं और "फ़ाइलें" पन्ने से आप उन्हें हटा सकते हैं। रेटिंग और राय भी केवल फोन में रहती हैं।</p></div>
+  <div class="card"><h3 style="margin-top:0">खुले स्रोत लाइब्रेरी</h3>
+    <p class="s">pdf-lib (MIT लाइसेंस) और PDF.js (Apache 2.0 लाइसेंस) का उपयोग हुआ है। पूरा लाइसेंस पाठ THIRD-PARTY.txt में है।</p></div>
 </section>
-
 </main>
+
 <nav>
-  <a data-p="home" class="on"><span>🏠</span>होम</a>
-  <a data-p="create"><span>➕</span>बनाएँ</a>
+  <a data-p="home"><span>🏠</span>होम</a>
   <a data-p="files"><span>📁</span>फ़ाइलें</a>
+  <a data-p="plans"><span>💎</span>प्लान</a>
   <a data-p="rate"><span>⭐</span>रेटिंग</a>
-  <a data-p="about"><span>ℹ️</span>जानकारी</a>
+  <a data-p="about"><span>⚙️</span>सेटिंग</a>
 </nav>
+<div id="toast"></div>
 
+<script src="pdf-lib.min.js"></script>
 <script>
-const $=id=>document.getElementById(id);
-const MAXSIDE=4096; // बहुत बड़ी फोटो पर मेमोरी की दिक्कत से बचाव
-let imgs=[];
+/* ============ सेटिंग (यहाँ अपना नाम और ईमेल बदलें) ============ */
+const CFG={CREATOR:'Royal Rajawat',EMAIL:'royalrajawat247@gmail.com',VERSION:'2.1',
+  PAYMENTS_ON:false,   // भुगतान चालू होने पर true करें; तभी रोज़ की सीमा लागू होगी
+  FREE_DAILY:5,FREE_MB:25,PRO_MB:100};
 
-/* ---------- पन्ने बदलना ---------- */
-function go(p){
-  document.querySelectorAll('.page').forEach(e=>e.classList.toggle('on',e.id===p));
-  document.querySelectorAll('nav a').forEach(a=>a.classList.toggle('on',a.dataset.p===p));
-  if(p==='files')renderFiles(); if(p==='rate')renderRate();
-  scrollTo(0,0);
-}
-document.querySelectorAll('nav a').forEach(a=>a.onclick=()=>go(a.dataset.p));
+const $=s=>document.querySelector(s);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+class UErr extends Error{}
+const mb=b=>b>=1048576?(b/1048576).toFixed(1)+' MB':Math.max(1,Math.round(b/1024))+' KB';
+const base=n=>n.replace(/\.[^.]+$/,'');
+const tick=()=>new Promise(r=>setTimeout(r,0));
+let toastT;function toast(t){const e=$('#toast');e.textContent=t;e.style.display='block';clearTimeout(toastT);toastT=setTimeout(()=>e.style.display='none',2600);}
 
-/* ---------- सुरक्षित भंडार (IndexedDB) ---------- */
-function db(){return new Promise((res,rej)=>{
-  const r=indexedDB.open('sarlpdf',1);
+/* ---------- भंडार (IndexedDB) ---------- */
+function db(){return new Promise((res,rej)=>{const r=indexedDB.open('sarlpdf',1);
   r.onupgradeneeded=()=>r.result.createObjectStore('f',{keyPath:'id',autoIncrement:true});
   r.onsuccess=()=>res(r.result);r.onerror=()=>rej(r.error);});}
-async function tx(mode,fn){const d=await db();return new Promise((res,rej)=>{
-  const t=d.transaction('f',mode);const out=fn(t.objectStore('f'));
-  t.oncomplete=()=>res(out&&out.result);t.onerror=()=>rej(t.error);});}
-const saveF=o=>tx('readwrite',s=>s.add(o));
-const allF=()=>tx('readonly',s=>s.getAll());
-const delF=id=>tx('readwrite',s=>s.delete(id));
+async function tx(mode,fn){const d=await db();return new Promise((res,rej)=>{const t=d.transaction('f',mode);const o=fn(t.objectStore('f'));
+  t.oncomplete=()=>res(o&&o.result);t.onerror=()=>rej(t.error);});}
+const saveF=o=>tx('readwrite',s=>s.add(o)),allF=()=>tx('readonly',s=>s.getAll()),delF=id=>tx('readwrite',s=>s.delete(id)),clrF=()=>tx('readwrite',s=>s.clear());
 
-/* ---------- फोटो चुनना ---------- */
-$('pick').onchange=e=>{
-  for(const f of e.target.files)if(f.type.startsWith('image/'))imgs.push({file:f,url:URL.createObjectURL(f)});
-  e.target.value='';drawGrid();
-};
-function drawGrid(){
-  $('grid').innerHTML=imgs.map((m,i)=>`<div class="th"><img src="${m.url}"><b>${i+1}</b><div>
-  <i onclick="mv(${i},-1)">◀</i><i onclick="rm(${i})">🗑</i><i onclick="mv(${i},1)">▶</i></div></div>`).join('');
-  $('empty').style.display=imgs.length?'none':'block';
-  $('mk').disabled=!imgs.length;
-}
-function mv(i,d){const j=i+d;if(j<0||j>=imgs.length)return;[imgs[i],imgs[j]]=[imgs[j],imgs[i]];drawGrid();}
-function rm(i){URL.revokeObjectURL(imgs[i].url);imgs.splice(i,1);drawGrid();}
+/* ---------- रोज़ की गिनती ---------- */
+const dayKey=()=>'use_'+new Date().toISOString().slice(0,10);
+const used=()=>{try{return +localStorage.getItem(dayKey())||0}catch(e){return 0}};
+const isPro=()=>{try{return localStorage.getItem('pro')==='1'}catch(e){return false}};
+function bump(){try{localStorage.setItem(dayKey(),used()+1);localStorage.setItem('total',(+localStorage.getItem('total')||0)+1)}catch(e){}}
+const limitOn=()=>CFG.PAYMENTS_ON&&!isPro();
+const maxMB=()=>isPro()?CFG.PRO_MB:CFG.FREE_MB;
 
-/* ---------- फोटो -> JPEG ---------- */
-async function toJpeg(file,q){
-  const bmp=await createImageBitmap(file); // फोन के घुमाव (EXIF) को खुद सही करता है
-  let w=bmp.width,h=bmp.height;const k=Math.min(1,MAXSIDE/Math.max(w,h));
-  w=Math.round(w*k);h=Math.round(h*k);
-  const c=document.createElement('canvas');c.width=w;c.height=h;
-  const x=c.getContext('2d');x.fillStyle='#fff';x.fillRect(0,0,w,h);x.drawImage(bmp,0,0,w,h);
-  bmp.close&&bmp.close();
-  const blob=await new Promise(r=>c.toBlob(r,'image/jpeg',q));
-  c.width=c.height=0; // मेमोरी खाली
-  return {w,h,data:new Uint8Array(await blob.arrayBuffer())};
-}
+/* ---------- सामान्य सहायक ---------- */
+function ranges(s,n){s=(s||'').replace(/\s/g,'');if(!s)throw new UErr('पन्ने लिखें, जैसे 1-3,5');
+  const out=[];for(const p of s.split(',')){const m=p.match(/^(\d+)(?:-(\d+))?$/);if(!m)throw new UErr('पन्नों का रूप गलत है। ऐसे लिखें: 1-3,5');
+    const a=+m[1],b=m[2]?+m[2]:a;if(a<1||b<a||b>n)throw new UErr('पन्ने 1 से '+n+' के बीच होने चाहिए');
+    for(let i=a;i<=b;i++)out.push(i-1);}return out;}
+async function loadPdf(file,opts){try{return await PDFLib.PDFDocument.load(await file.arrayBuffer(),opts)}
+  catch(e){if(/encrypt/i.test(e.message))throw new UErr('"'+file.name+'" पासवर्ड वाली PDF है। यह अभी नहीं खुल सकती।');
+    throw new UErr('"'+file.name+'" पढ़ी नहीं जा सकी। फ़ाइल खराब या PDF नहीं है।');}}
+async function toJpeg(file,q,maxSide){let bmp;try{bmp=await createImageBitmap(file)}catch(e){throw new UErr('"'+file.name+'" फोटो पढ़ी नहीं जा सकी।')}
+  let w=bmp.width,h=bmp.height;const k=Math.min(1,(maxSide||4096)/Math.max(w,h));w=Math.round(w*k);h=Math.round(h*k);
+  const c=document.createElement('canvas');c.width=w;c.height=h;const x=c.getContext('2d');x.fillStyle='#fff';x.fillRect(0,0,w,h);x.drawImage(bmp,0,0,w,h);
+  bmp.close&&bmp.close();const blob=await new Promise(r=>c.toBlob(r,'image/jpeg',q));c.width=c.height=0;
+  return{w,h,data:new Uint8Array(await blob.arrayBuffer())};}
+let _pdfjs;async function getPdfjs(){if(!_pdfjs){_pdfjs=await import('./pdf.min.mjs');
+  _pdfjs.GlobalWorkerOptions.workerSrc=new URL('./pdf.worker.min.mjs',location.href).href;}return _pdfjs;}
+async function openPdfjs(file){const lib=await getPdfjs();try{return await lib.getDocument({data:new Uint8Array(await file.arrayBuffer())}).promise}
+  catch(e){if(e&&e.name==='PasswordException')throw new UErr('"'+file.name+'" पासवर्ड वाली PDF है।');throw new UErr('"'+file.name+'" पढ़ी नहीं जा सकी।');}}
+async function renderPage(pdf,i,dpi,maxSide){const page=await pdf.getPage(i);let sc=dpi/72;const v1=page.getViewport({scale:1});
+  sc=Math.min(sc,maxSide/Math.max(v1.width,v1.height));const vp=page.getViewport({scale:sc});
+  const c=document.createElement('canvas');c.width=Math.ceil(vp.width);c.height=Math.ceil(vp.height);
+  const ctx=c.getContext('2d');ctx.fillStyle='#fff';ctx.fillRect(0,0,c.width,c.height);
+  await page.render({canvasContext:ctx,canvas:c,viewport:vp}).promise;page.cleanup();return{c,pw:v1.width,ph:v1.height};}
+const blobOf=(c,q)=>new Promise(r=>c.toBlob(r,'image/jpeg',q));
+const pdfBlob=b=>new Blob([b],{type:'application/pdf'});
 
-/* ---------- PDF इंजन (बिना किसी लाइब्रेरी के) ---------- */
-function buildPDF(pgs,size,margin){
-  const enc=new TextEncoder(),parts=[],off=[];let len=0;
-  const push=x=>{const b=typeof x==='string'?enc.encode(x):x;parts.push(b);len+=b.length;};
-  const obj=(n,body)=>{off[n]=len;push(n+' 0 obj\n');push(body);push('\nendobj\n');};
-  push('%PDF-1.4\n');push(new Uint8Array([37,226,227,207,211,10]));
-  const kids=[];
-  pgs.forEach((p,i)=>kids.push((5+i*3)+' 0 R'));
-  obj(1,'<< /Type /Catalog /Pages 2 0 R >>');
-  obj(2,`<< /Type /Pages /Count ${pgs.length} /Kids [${kids.join(' ')}] >>`);
-  pgs.forEach((p,i)=>{
-    const im=3+i*3,ct=4+i*3,pg=5+i*3;
-    let pw,ph;
-    if(size==='fit'){pw=p.w*0.75;ph=p.h*0.75;}
-    else{pw=595.28;ph=841.89;if(p.w>p.h){[pw,ph]=[ph,pw];}}
-    const m=size==='fit'?0:margin;
-    const s=Math.min((pw-2*m)/p.w,(ph-2*m)/p.h);
-    const dw=p.w*s,dh=p.h*s,x=(pw-dw)/2,y=(ph-dh)/2;
-    off[im]=len;
-    push(`${im} 0 obj\n<< /Type /XObject /Subtype /Image /Width ${p.w} /Height ${p.h} /ColorSpace /DeviceRGB /BitsPerComponent 8 /Filter /DCTDecode /Length ${p.data.length} >>\nstream\n`);
-    push(p.data);push('\nendstream\nendobj\n');
-    const cs=`q ${dw.toFixed(2)} 0 0 ${dh.toFixed(2)} ${x.toFixed(2)} ${y.toFixed(2)} cm /Im0 Do Q`;
-    obj(ct,`<< /Length ${cs.length} >>\nstream\n${cs}\nendstream`);
-    obj(pg,`<< /Type /Page /Parent 2 0 R /MediaBox [0 0 ${pw.toFixed(2)} ${ph.toFixed(2)}] /Resources << /XObject << /Im0 ${im} 0 R >> >> /Contents ${ct} 0 R >>`);
-  });
-  const n=3+pgs.length*3,xr=len;
-  let t=`xref\n0 ${n}\n0000000000 65535 f \n`;
-  for(let i=1;i<n;i++)t+=String(off[i]).padStart(10,'0')+' 00000 n \n';
-  t+=`trailer\n<< /Size ${n} /Root 1 0 R >>\nstartxref\n${xr}\n%%EOF`;
-  push(t);
-  return new Blob(parts,{type:'application/pdf'});
-}
+/* ---------- टूल्स की सूची ---------- */
+const O={sel:(id,l,opts)=>`<label>${l}</label><select id="o-${id}">${opts.map(o=>`<option value="${o[0]}">${o[1]}</option>`).join('')}</select>`,
+  txt:(id,l,ph)=>`<label>${l}</label><input type="text" id="o-${id}" placeholder="${ph||''}" autocomplete="off">`};
+const v=id=>{const e=document.getElementById('o-'+id);return e?e.value:''};
 
-/* ---------- PDF बनाना ---------- */
-$('mk').onclick=async()=>{
-  const btn=$('mk'),pr=$('prog'),bar=pr.firstElementChild;
-  btn.disabled=true;pr.style.display='block';$('msg').textContent='';
-  try{
-    const pgs=[];
-    for(let i=0;i<imgs.length;i++){
-      pgs.push(await toJpeg(imgs[i].file,parseFloat($('qual').value)));
-      bar.style.width=Math.round((i+1)/imgs.length*90)+'%';
-      await new Promise(r=>setTimeout(r,0)); // स्क्रीन अटकने से बचाव
-    }
-    const blob=buildPDF(pgs,$('size').value,parseInt($('margin').value));
-    const name=($('fname').value.trim()||'दस्तावेज़_'+new Date().toISOString().slice(0,10))+'.pdf';
-    await saveF({name,date:Date.now(),size:blob.size,blob});
-    bar.style.width='100%';
-    $('msg').textContent='✅ PDF तैयार! "फ़ाइलें" में देखें।';
-    imgs.forEach(m=>URL.revokeObjectURL(m.url));imgs=[];drawGrid();$('fname').value='';
-    setTimeout(()=>go('files'),700);
-  }catch(e){
-    $('msg').textContent='❌ कुछ गड़बड़ हुई। कम फोटो या "छोटी फ़ाइल" गुणवत्ता से फिर कोशिश करें।';
-  }
-  pr.style.display='none';bar.style.width='0';btn.disabled=!imgs.length;
-};
+const TOOLS=[
+{id:'img2pdf',ic:'🖼️',c:'#3b82f6',n:'फोटो से PDF',d:'एक या कई फोटो को एक PDF में बदलें',multi:true,accept:'image/*',
+ opts:()=>O.sel('size','पन्ने का आकार',[['a4','A4'],['fit','फोटो के बराबर']])+O.sel('margin','किनारे की जगह',[['0','कोई नहीं'],['20','छोटी'],['40','बड़ी']])+O.sel('q','गुणवत्ता',[['0.95','उच्चतम'],['0.85','बहुत अच्छी'],['0.65','छोटी फ़ाइल']]),
+ async run(files,_,p){const doc=await PDFLib.PDFDocument.create();const q=+v('q'),m=+v('margin'),size=v('size');
+  for(let i=0;i<files.length;i++){p(i/files.length,'फोटो '+(i+1)+' / '+files.length);await tick();
+   const j=await toJpeg(files[i],q);const img=await doc.embedJpg(j.data);let pw,ph;
+   if(size==='fit'){pw=j.w*.75;ph=j.h*.75}else{pw=595.28;ph=841.89;if(j.w>j.h)[pw,ph]=[ph,pw]}
+   const mm=size==='fit'?0:m;const s=Math.min((pw-2*mm)/j.w,(ph-2*mm)/j.h);const dw=j.w*s,dh=j.h*s;
+   const pg=doc.addPage([pw,ph]);pg.drawImage(img,{x:(pw-dw)/2,y:(ph-dh)/2,width:dw,height:dh});}
+  p(.97,'PDF बन रही है…');return[{name:(files.length===1?base(files[0].name):'photos')+'.pdf',blob:pdfBlob(await doc.save())}];}},
+{id:'merge',ic:'🔗',c:'#22c55e',n:'PDF जोड़ें',d:'कई PDF को एक PDF में मिलाएँ',multi:true,accept:'application/pdf',min:2,
+ opts:()=>'<p class="s">फ़ाइलों का क्रम ◀ ▶ बटन से बदलें।</p>',
+ async run(files,_,p){const out=await PDFLib.PDFDocument.create();
+  for(let i=0;i<files.length;i++){p(i/files.length,'फ़ाइल '+(i+1)+' / '+files.length);await tick();
+   const d=await loadPdf(files[i]);const pgs=await out.copyPages(d,d.getPageIndices());pgs.forEach(x=>out.addPage(x));}
+  return[{name:'merged.pdf',blob:pdfBlob(await out.save())}];}},
+{id:'split',ic:'✂️',c:'#ec4899',n:'PDF तोड़ें',d:'चुने हुए पन्नों से नई PDF बनाएँ',multi:false,accept:'application/pdf',
+ opts:()=>O.sel('mode','तरीका',[['range','चुने पन्नों की एक PDF'],['each','हर पन्ना अलग PDF (अधिकतम 30)']])+O.txt('range','पन्ने','जैसे 1-3,5'),
+ async run(files,_,p){const d=await loadPdf(files[0]);const n=d.getPageCount();const b=base(files[0].name);
+  if(v('mode')==='each'){if(n>30)throw new UErr('हर पन्ना अलग करने के लिए PDF में 30 से कम पन्ने चाहिए। पन्नों वाला तरीका चुनें।');
+   const outs=[];for(let i=0;i<n;i++){p(i/n,'पन्ना '+(i+1));await tick();const o=await PDFLib.PDFDocument.create();
+    const[pg]=await o.copyPages(d,[i]);o.addPage(pg);outs.push({name:b+'_p'+(i+1)+'.pdf',blob:pdfBlob(await o.save())});}return outs;}
+  const idx=ranges(v('range'),n);const o=await PDFLib.PDFDocument.create();(await o.copyPages(d,idx)).forEach(x=>o.addPage(x));
+  return[{name:b+'_split.pdf',blob:pdfBlob(await o.save())}];}},
+{id:'remove',ic:'🗑️',c:'#ef4444',n:'पन्ने हटाएँ',d:'PDF से बेकार पन्ने निकाल दें',multi:false,accept:'application/pdf',
+ opts:()=>O.txt('range','हटाने वाले पन्ने','जैसे 2,4-6'),
+ async run(files){const d=await loadPdf(files[0]);const n=d.getPageCount();const idx=[...new Set(ranges(v('range'),n))].sort((a,b)=>b-a);
+  if(idx.length>=n)throw new UErr('सारे पन्ने नहीं हटा सकते।');idx.forEach(i=>d.removePage(i));
+  return[{name:base(files[0].name)+'_edited.pdf',blob:pdfBlob(await d.save())}];}},
+{id:'rotate',ic:'🔄',c:'#a855f7',n:'PDF घुमाएँ',d:'पन्नों को 90°, 180° या 270° घुमाएँ',multi:false,accept:'application/pdf',
+ opts:()=>O.sel('ang','घुमाव',[['90','90° दाएँ'],['180','180°'],['270','90° बाएँ']])+O.txt('range','पन्ने (खाली = सभी)','जैसे 1-3,5'),
+ async run(files){const d=await loadPdf(files[0]);const n=d.getPageCount();const idx=v('range').trim()?ranges(v('range'),n):d.getPageIndices();
+  idx.forEach(i=>{const pg=d.getPage(i);pg.setRotation(PDFLib.degrees((pg.getRotation().angle+ +v('ang'))%360))});
+  return[{name:base(files[0].name)+'_rotated.pdf',blob:pdfBlob(await d.save())}];}},
+{id:'compress',ic:'🗜️',c:'#f59e0b',n:'PDF छोटा करें',d:'फ़ाइल का आकार घटाएँ (पन्ने फोटो बन जाते हैं)',multi:false,accept:'application/pdf',
+ opts:()=>O.sel('lvl','छोटा करने का स्तर',[['100,0.6','अधिक छोटा'],['130,0.72','संतुलित'],['170,0.82','बेहतर गुणवत्ता']])+'<p class="s">ध्यान: इसमें लिखा टेक्स्ट चुना/कॉपी नहीं जा सकेगा, पन्ने फोटो जैसे हो जाते हैं। अगर नतीजा बड़ा निकला तो हम फ़ाइल नहीं बनाएँगे।</p>',
+ async run(files,_,p){const[dpi,q]=v('lvl').split(',').map(Number);const src=await openPdfjs(files[0]);const n=src.numPages;
+  if(n>80)throw new UErr('बहुत लंबी PDF है (80 से अधिक पन्ने)। पहले उसे तोड़ लें।');
+  const doc=await PDFLib.PDFDocument.create();
+  for(let i=1;i<=n;i++){p((i-1)/n,'पन्ना '+i+' / '+n);await tick();const{c,pw,ph}=await renderPage(src,i,dpi,2400);
+   const jpg=await doc.embedJpg(new Uint8Array(await(await blobOf(c,q)).arrayBuffer()));c.width=c.height=0;
+   const pg=doc.addPage([pw,ph]);pg.drawImage(jpg,{x:0,y:0,width:pw,height:ph});}
+  const bytes=await doc.save();
+  if(bytes.length>=files[0].size)throw new UErr('इस PDF में पहले से बहुत कम जगह है, छोटा करने पर फ़ाइल बड़ी हो रही थी। इसलिए मूल फ़ाइल ही रखें।');
+  return[{name:base(files[0].name)+'_small.pdf',blob:pdfBlob(bytes),note:'पहले '+mb(files[0].size)+' → अब '+mb(bytes.length)}];}},
+{id:'wm',ic:'💧',c:'#14b8a6',n:'वॉटरमार्क',d:'हर पन्ने पर तिरछा नाम या शब्द छापें',multi:false,accept:'application/pdf',
+ opts:()=>O.txt('text','वॉटरमार्क लिखें','जैसे गोपनीय / CONFIDENTIAL')+O.sel('col','रंग',[['#808080','स्लेटी'],['#e11d48','लाल'],['#2563eb','नीला'],['#000000','काला']])+'<label>गहराई</label><input type="range" id="o-op" min="10" max="60" value="25">',
+ async run(files,_,p){const t=v('text').trim();if(!t)throw new UErr('वॉटरमार्क का शब्द लिखें।');const d=await loadPdf(files[0]);
+  const c=document.createElement('canvas');const x=c.getContext('2d');const f='700 120px system-ui,"Noto Sans Devanagari",sans-serif';x.font=f;
+  const w=Math.ceil(x.measureText(t).width)+80,h=220;c.width=w;c.height=h;const x2=c.getContext('2d');x2.font=f;x2.fillStyle=v('col');x2.textBaseline='middle';x2.textAlign='center';x2.fillText(t,w/2,h/2);
+  const png=await d.embedPng(new Uint8Array(await(await new Promise(r=>c.toBlob(r,'image/png'))).arrayBuffer()));
+  const th=Math.PI/4,deg=45,cs=Math.cos(th),sn=Math.sin(th);const pgs=d.getPages();
+  pgs.forEach((pg,i)=>{p(i/pgs.length,'पन्ना '+(i+1));const{width:W,height:H}=pg.getSize();const iw=Math.min(W,H)*.8,ih=iw*h/w;
+   const cx=W/2,cy=H/2;pg.drawImage(png,{x:cx-(iw/2)*cs+(ih/2)*sn,y:cy-(iw/2)*sn-(ih/2)*cs,width:iw,height:ih,rotate:PDFLib.degrees(deg),opacity:(+v('op'))/100});});
+  return[{name:base(files[0].name)+'_watermark.pdf',blob:pdfBlob(await d.save())}];}},
+{id:'text',ic:'🔤',c:'#06b6d4',n:'टेक्स्ट निकालें',d:'PDF में लिखा टेक्स्ट कॉपी करें',multi:false,accept:'application/pdf',
+ opts:()=>'<p class="s">स्कैन की हुई (फोटो वाली) PDF में टेक्स्ट नहीं मिलता।</p>',
+ async run(files,_,p){const src=await openPdfjs(files[0]);let all='';
+  for(let i=1;i<=src.numPages;i++){p((i-1)/src.numPages,'पन्ना '+i);await tick();const pg=await src.getPage(i);const tc=await pg.getTextContent();
+   let s='';for(const it of tc.items){s+=it.str;s+=it.hasEOL?'\n':' ';}all+=s.trim()+'\n\n';}
+  all=all.trim();if(!all)throw new UErr('इस PDF में कोई टेक्स्ट नहीं मिला। शायद यह स्कैन की हुई PDF है।');
+  return[{name:base(files[0].name)+'.txt',blob:new Blob([all],{type:'text/plain'}),text:all}];}},
+{id:'meta',ic:'ℹ️',c:'#64748b',n:'PDF की जानकारी',d:'पन्ने, आकार, लेखक, तारीख देखें',multi:false,accept:'application/pdf',
+ opts:()=>'<p class="s">फ़ाइल में कुछ बदला नहीं जाता, सिर्फ़ जानकारी दिखती है।</p>',
+ async run(files){const f=files[0];let d;try{d=await PDFLib.PDFDocument.load(await f.arrayBuffer(),{ignoreEncryption:true,updateMetadata:false})}catch(e){throw new UErr('PDF पढ़ी नहीं जा सकी।')}
+  const sz=d.getPageCount()?d.getPage(0).getSize():{width:0,height:0};const dt=x=>x?x.toLocaleString('hi-IN'):'—';
+  return[{info:[['फ़ाइल',f.name],['आकार',mb(f.size)],['पन्ने',d.getPageCount()],['पहले पन्ने का आकार',Math.round(sz.width)+' × '+Math.round(sz.height)+' pt'],['शीर्षक',d.getTitle()||'—'],['लेखक',d.getAuthor()||'—'],['बनाने वाला टूल',d.getCreator()||'—'],['बनी',dt(d.getCreationDate())],['बदली',dt(d.getModificationDate())],['पासवर्ड वाली',d.isEncrypted?'हाँ':'नहीं']]}];}},
+{id:'pdf2img',ic:'📸',c:'#8b5cf6',n:'PDF से फोटो',d:'हर पन्ने की JPG फोटो बनाएँ',multi:false,accept:'application/pdf',
+ opts:()=>O.sel('dpi','गुणवत्ता',[['110','सामान्य'],['160','अच्छी'],['220','उच्चतम'],['300','Full HD 300 DPI (भारी)']])+'<p class="s">अधिकतम 40 पन्ने। 300 DPI में पुराने फोन पर समय लग सकता है।</p>',
+ async run(files,_,p){const src=await openPdfjs(files[0]);const n=src.numPages;if(n>40)throw new UErr('40 से अधिक पन्ने हैं। पहले PDF तोड़ लें।');
+  const outs=[];for(let i=1;i<=n;i++){p((i-1)/n,'पन्ना '+i+' / '+n);await tick();const{c}=await renderPage(src,i,+v('dpi'),+v('dpi')>=300?3600:3000);
+   outs.push({name:base(files[0].name)+'_p'+i+'.jpg',blob:await blobOf(c,.92)});c.width=c.height=0;}return outs;}}
+];
+
+/* ---------- राउटर ---------- */
+let curTool=null,st={files:[]};
+const PAGES=['home','tool','files','plans','rate','about'];
+function route(){const h=(location.hash||'#home').slice(1);const[pg,arg]=h.split('/');
+  let p=PAGES.includes(pg)?pg:(pg==='t'?'tool':'home');
+  if(pg==='t'){const t=TOOLS.find(x=>x.id===arg);if(!t){location.hash='home';return}openTool(t)}
+  PAGES.forEach(x=>$('#p-'+x).classList.toggle('on',x===p));
+  document.querySelectorAll('nav a').forEach(a=>a.classList.toggle('on',a.dataset.p===(p==='tool'?'home':p)));
+  if(p==='files')renderFiles();if(p==='rate')renderRate();if(p==='home')renderHome();scrollTo(0,0);}
+document.querySelectorAll('nav a').forEach(a=>a.onclick=()=>{location.hash=a.dataset.p});
+window.addEventListener('hashchange',route);
+
+function renderHome(){$('#grid').innerHTML=TOOLS.map(t=>`<button class="tool" onclick="location.hash='t/${t.id}'"><span class="ic" style="background:${t.c}26">${t.ic}</span><span>${t.n}<small>${t.d}</small></span></button>`).join('');
+  $('#todayN').textContent='आज किए गए काम: '+used();$('#limN').textContent=limitOn()?'सीमा: '+CFG.FREE_DAILY+' रोज़':'सीमा: कोई नहीं (ऑफ़र)';
+  let tot=0;try{tot=+localStorage.getItem('total')||0}catch(e){}$('#rateHint').style.display=(tot>=3&&!getR().length)?'block':'none';}
+
+/* ---------- टूल पन्ना ---------- */
+function openTool(t){curTool=t;st={files:[]};
+  $('#p-tool').innerHTML=`<div class="top"><button class="back" onclick="history.back()">‹</button><span class="ic" style="background:${t.c}26">${t.ic}</span><h2>${t.n}</h2></div>
+  <p class="desc">${t.d}</p>
+  <div class="sec">${t.multi?'फ़ाइलें':'फ़ाइल'}</div>
+  <div class="card" id="flistT"></div>
+  <button class="drop" id="pickB" style="color:${t.c};border-color:${t.c}">➕ ${t.multi?'फ़ाइलें चुनें':'फ़ाइल चुनें'}</button>
+  <div id="optsT">${t.opts()}</div>
+  <button class="btn" id="runB">⚡ शुरू करें</button>
+  <div class="prog" id="prog"><i></i></div><div class="pmsg" id="pmsg"></div>
+  <div class="err" id="errT"></div><div id="resT"></div>`;
+  $('#pickB').onclick=()=>{const i=document.createElement('input');i.type='file';i.accept=t.accept;if(t.multi)i.multiple=true;
+    i.onchange=()=>{const add=[...i.files];const lim=maxMB()*1048576;
+      for(const f of add){if(limitOn()&&f.size>lim){toast('"'+f.name+'" '+maxMB()+' MB से बड़ी है');continue}
+        if(f.size>150*1048576){toast('फ़ाइल बहुत बड़ी है');continue}
+        st.files.push(f);}
+      if(!t.multi&&st.files.length>1)st.files=[st.files[st.files.length-1]];drawFiles();};i.click();};
+  $('#runB').onclick=runTool;drawFiles();}
+function drawFiles(){const t=curTool,el=$('#flistT');
+  el.innerHTML=st.files.length?st.files.map((f,i)=>`<div class="file">${t.multi?`<b>${i+1}</b>`:''}<div class="n">${esc(f.name)}<small>${mb(f.size)}</small></div>
+   ${t.multi?`<button class="mini" onclick="mvF(${i},-1)">◀</button><button class="mini" onclick="mvF(${i},1)">▶</button>`:''}<button class="mini red" onclick="rmF(${i})">✕</button></div>`).join(''):'<div class="empty">अभी कोई फ़ाइल नहीं चुनी गई</div>';}
+function mvF(i,d){const j=i+d;if(j<0||j>=st.files.length)return;[st.files[i],st.files[j]]=[st.files[j],st.files[i]];drawFiles()}
+function rmF(i){st.files.splice(i,1);drawFiles()}
+function prog(f,m){const p=$('#prog');p.style.display='block';p.firstElementChild.style.width=Math.round(f*100)+'%';$('#pmsg').textContent=m||''}
+async function runTool(){const t=curTool;$('#errT').textContent='';$('#resT').innerHTML='';
+  if(!st.files.length){toast('पहले फ़ाइल चुनें');return}
+  if(t.min&&st.files.length<t.min){toast('कम से कम '+t.min+' फ़ाइलें चुनें');return}
+  if(limitOn()&&used()>=CFG.FREE_DAILY){toast('आज की मुफ़्त सीमा पूरी हुई');location.hash='plans';return}
+  const b=$('#runB');b.disabled=true;prog(0,'शुरू हो रहा है…');
+  try{const outs=await t.run(st.files,null,prog);prog(1,'');
+    if(outs[0]&&outs[0].info){$('#resT').innerHTML='<div class="card res"><h3>✅ जानकारी</h3>'+outs[0].info.map(r=>`<div class="kv"><span>${esc(r[0])}</span><span style="text-align:right;max-width:60%;word-break:break-all">${esc(r[1])}</span></div>`).join('')+'</div>';$('#prog').style.display='none';bump();b.disabled=false;return}
+    const saved=[];
+    for(const o of outs){const rec={name:o.name,date:Date.now(),size:o.blob.size,type:o.blob.type,blob:o.blob};rec.id=await saveF(rec);saved.push({...rec,note:o.note,text:o.text});}
+    bump();showRes(saved);
+  }catch(e){prog(0,'');$('#prog').style.display='none';
+    $('#errT').textContent=e instanceof UErr?'⚠️ '+e.message:'❌ कुछ गड़बड़ हुई। कम पन्नों/छोटी फ़ाइल से फिर कोशिश करें। ('+(e&&e.message||'अज्ञात')+')';}
+  b.disabled=false;}
+function showRes(a){let h='';
+  for(const o of a.slice(0,50)){h+=`<div class="card res"><h3>✅ तैयार</h3><div class="n">${esc(o.name)}</div><p class="s">${mb(o.size)}${o.note?' · '+esc(o.note):''} · "फ़ाइलें" में सुरक्षित</p>
+   ${o.text?`<textarea class="out" readonly>${esc(o.text)}</textarea>`:''}
+   <div class="row"><button class="mini" onclick="openF(${o.id})">खोलें</button><button class="mini" onclick="shareF(${o.id})">भेजें</button><button class="mini" onclick="dlF(${o.id})">डाउनलोड</button>${o.text?`<button class="mini" onclick="copyT(this)">कॉपी</button>`:''}</div></div>`;}
+  $('#resT').innerHTML=h;$('#prog').style.display='none';$('#resT').scrollIntoView({behavior:'smooth',block:'nearest'});}
+function copyT(b){const t=b.closest('.card').querySelector('textarea');t.select();try{navigator.clipboard.writeText(t.value)}catch(e){document.execCommand('copy')}toast('कॉपी हो गया')}
 
 /* ---------- फ़ाइलें ---------- */
-const mb=b=>b>1048576?(b/1048576).toFixed(1)+' MB':Math.round(b/1024)+' KB';
-async function renderFiles(){
-  const a=(await allF()).reverse();
-  $('nof').style.display=a.length?'none':'block';
-  $('list').innerHTML=a.map(f=>`<div class="card"><b>${esc(f.name)}</b>
-  <div class="row"><small>${new Date(f.date).toLocaleDateString('hi-IN')} · ${mb(f.size)}</small></div>
-  <div class="row" style="margin-top:8px"><button class="mini" onclick="openF(${f.id})">खोलें</button>
-  <button class="mini" onclick="shareF(${f.id})">भेजें</button>
-  <button class="mini alt" onclick="dlF(${f.id})">डाउनलोड</button>
-  <button class="mini alt" onclick="delN(${f.id})">🗑</button></div></div>`).join('');
-}
-const esc=s=>s.replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
-async function get(id){return (await allF()).find(f=>f.id===id);}
-async function openF(id){const f=await get(id);window.open(URL.createObjectURL(f.blob),'_blank');}
-async function dlF(id){const f=await get(id);const a=document.createElement('a');a.href=URL.createObjectURL(f.blob);a.download=f.name;a.click();}
-async function shareF(id){
-  const f=await get(id);const file=new File([f.blob],f.name,{type:'application/pdf'});
-  if(navigator.canShare&&navigator.canShare({files:[file]})){try{await navigator.share({files:[file],title:f.name});}catch(e){}}
-  else dlF(id);
-}
-async function delN(id){if(confirm('यह PDF हटा दें?')){await delF(id);renderFiles();}}
+async function getF(id){return(await allF()).find(f=>f.id===id)}
+async function renderFiles(){const a=(await allF()).reverse();$('#nof').style.display=a.length?'none':'block';$('#clearAll').style.display=a.length?'inline-block':'none';
+  $('#flist').innerHTML=a.map(f=>`<div class="card"><b>${esc(f.name)}</b><p class="s">${new Date(f.date).toLocaleDateString('hi-IN')} · ${mb(f.size)}</p>
+  <div class="row"><button class="mini" onclick="openF(${f.id})">खोलें</button><button class="mini" onclick="shareF(${f.id})">भेजें</button><button class="mini" onclick="dlF(${f.id})">डाउनलोड</button><button class="mini red" onclick="delN(${f.id})">🗑</button></div></div>`).join('');}
+async function openF(id){const f=await getF(id);if(!f)return;const u=URL.createObjectURL(f.blob);const w=window.open(u,'_blank');if(!w)dlF(id)}
+async function dlF(id){const f=await getF(id);if(!f)return;const a=document.createElement('a');a.href=URL.createObjectURL(f.blob);a.download=f.name;document.body.appendChild(a);a.click();a.remove()}
+async function shareF(id){const f=await getF(id);if(!f)return;const file=new File([f.blob],f.name,{type:f.type});
+  if(navigator.canShare&&navigator.canShare({files:[file]})){try{await navigator.share({files:[file],title:f.name})}catch(e){}}else dlF(id)}
+async function delN(id){if(confirm('यह फ़ाइल हटा दें?')){await delF(id);renderFiles()}}
+$('#clearAll').onclick=async()=>{if(confirm('सारी फ़ाइलें हटा दें?')){await clrF();renderFiles()}};
 
-/* ---------- रेटिंग और शेयर ---------- */
-let stars=0;
-const sEls=[...document.querySelectorAll('#stars s')];
-function paint(n){sEls.forEach((s,i)=>s.classList.toggle('f',i<n));}
-sEls.forEach((s,i)=>s.onclick=()=>{stars=i+1;paint(stars);});
+/* ---------- प्लान, रेटिंग, जानकारी ---------- */
+document.querySelectorAll('.plan-btn').forEach(b=>b.onclick=()=>{try{localStorage.setItem('interest','1')}catch(e){}toast('भुगतान चालू होते ही यहीं दिखेगा। धन्यवाद!')});
+let stars=0;const sEls=[...document.querySelectorAll('#stars s')];const paint=n=>sEls.forEach((s,i)=>s.classList.toggle('f',i<n));
+sEls.forEach((s,i)=>s.onclick=()=>{stars=i+1;paint(stars)});
 function getR(){try{return JSON.parse(localStorage.getItem('ratings')||'[]')}catch(e){return[]}}
-$('sendR').onclick=()=>{
-  if(!stars){alert('पहले तारे चुनें');return;}
-  const r=getR();r.push({s:stars,c:$('cmt').value,d:Date.now()});
-  try{localStorage.setItem('ratings',JSON.stringify(r));}catch(e){}
-  $('cmt').value='';stars=0;paint(0);renderRate();alert('धन्यवाद! 🙏');
-};
-function renderRate(){
-  const r=getR();
-  $('avg').textContent=r.length?`आपकी दी रेटिंग: ${r.length} · औसत ${(r.reduce((a,b)=>a+b.s,0)/r.length).toFixed(1)} ★`:'';
-}
-async function shareApp(){
-  const d={title:'सरल PDF',text:'फोटो से PDF बनाएँ - मुफ़्त, बिना विज्ञापन!',url:location.href};
-  if(navigator.share){try{await navigator.share(d);}catch(e){}}
-  else{try{await navigator.clipboard.writeText(d.url);alert('लिंक कॉपी हो गया');}catch(e){}}
-}
+$('#sendR').onclick=()=>{if(!stars){toast('पहले तारे चुनें');return}const r=getR();r.push({s:stars,c:$('#cmt').value,d:Date.now()});
+  try{localStorage.setItem('ratings',JSON.stringify(r))}catch(e){}$('#cmt').value='';stars=0;paint(0);renderRate();toast('धन्यवाद! 🙏')};
+function renderRate(){const r=getR();$('#avg').textContent=r.length?'आपकी दी रेटिंग: '+r.length+' · औसत '+(r.reduce((a,b)=>a+b.s,0)/r.length).toFixed(1)+' ★':''}
+$('#shareApp').onclick=async()=>{const d={title:'RR PDF Pro',text:'सारे PDF टूल, 100% ऑफ़लाइन, बिना विज्ञापन!',url:location.href.split('#')[0]};
+  if(navigator.share){try{await navigator.share(d)}catch(e){}}else{try{await navigator.clipboard.writeText(d.url);toast('लिंक कॉपी हो गया')}catch(e){}}};
+$('#cr').textContent=CFG.CREATOR;$('#em').textContent=CFG.EMAIL;$('#ver').textContent=CFG.VERSION;
 
+/* ---------- सेटिंग ---------- */
+function applyTheme(l){document.documentElement.dataset.theme=l?'light':'dark';document.querySelector('meta[name=theme-color]').content=l?'#f5f5f7':'#000000'}
+let isL=false;try{isL=localStorage.getItem('light')==='1'}catch(e){}applyTheme(isL);$('#setLight').checked=isL;
+$('#setLight').onchange=e=>{applyTheme(e.target.checked);try{localStorage.setItem('light',e.target.checked?'1':'0')}catch(x){}};
+let wl=null;async function wake(on){try{if(on){if(!('wakeLock' in navigator)){$('#wakeNote').textContent='इस फोन/ब्राउज़र में यह सुविधा नहीं है।';$('#setWake').checked=false;return}wl=await navigator.wakeLock.request('screen')}else if(wl){await wl.release();wl=null}}catch(e){$('#setWake').checked=false}}
+$('#setWake').onchange=e=>wake(e.target.checked);
+document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible'&&$('#setWake').checked)wake(true)});
+
+/* ---------- इंस्टॉल और ऑफ़लाइन ---------- */
+let dp;window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();dp=e;$('#inst').style.display='flex'});
+$('#inst').onclick=async()=>{if(!dp)return;dp.prompt();await dp.userChoice;dp=null;$('#inst').style.display='none'};
 if('serviceWorker' in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{});
-drawGrid();
+route();
 </script>
 </body>
 </html>

@@ -1,7 +1,7 @@
 {
-  "name": "सरल PDF",
-  "short_name": "सरल PDF",
-  "description": "फोटो से PDF बनाएँ - मुफ़्त और बिना विज्ञापन",
+  "name": "RR PDF Pro",
+  "short_name": "RR PDF Pro",
+  "description": "ऑफ़लाइन PDF टूलकिट - मुफ़्त और बिना विज्ञापन",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
